@@ -103,11 +103,11 @@ class Expense(BaseModel):
 
 @app.post("/create")
 def create_expense(expense : Expense):
-    data = load_data()
+    data = load_data() # 1. Load old data
     if expense.id in data: # for duplicate data remove
         raise HTTPException(status_code = 400, detail= "Expense id already exist")
-    data[expense.id] = expense.model_dump(exclude=['id']) # Add new data & exclude id
-    save_data(data)
+    data[expense.id] = expense.model_dump(exclude=['id']) # 2. Add new data & exclude id
+    save_data(data) # save data
 
     # Save file
 def save_data(data):
